@@ -45,12 +45,8 @@ def render():
         )
 
     with col2:
-        st.markdown("""
-        <div class="card">
-            <h3 class="card-title">Kualitas Udara per Wilayah <span class="info-icon">i</span></h3>
-        """, unsafe_allow_html=True)
+        # render_peta_jakarta sekarang self-contained (sudah include card wrapper + title)
         render_peta_jakarta(snapshot)
-        st.markdown("</div>", unsafe_allow_html=True)
 
     # ─── Row 2: Tren ISPU 7 hari + Prediksi ISPU ────────────────
     col3, col4 = st.columns([1.3, 1], gap="medium")
