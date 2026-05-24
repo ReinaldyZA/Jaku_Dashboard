@@ -3,6 +3,7 @@ Komponen reusable: hero card, polutan grid, peta sederhana,
 chart helpers, rekomendasi cards.
 """
 from __future__ import annotations
+import base64
 from datetime import date
 
 import pandas as pd
@@ -163,7 +164,15 @@ def render_peta_jakarta(snapshot: dict):
     # Container card
     col1, col2 = st.columns([3, 1.2])
     with col1:
-        st.markdown(svg, unsafe_allow_html=True)
+        # Encode SVG ke base64 dan tampilkan sebagai <img> agar lolos
+        # HTML sanitization Streamlit (yang strip <svg> tag mentah).
+        svg_b64 = base64.b64encode(svg.encode("utf-8")).decode("ascii")
+        st.markdown(
+            f'<img src="data:image/svg+xml;base64,{svg_b64}" '
+            f'style="width:100%; height:auto; max-height:340px;" '
+            f'alt="Peta kualitas udara Jakarta">',
+            unsafe_allow_html=True,
+        )
     with col2:
         st.markdown(legenda_html, unsafe_allow_html=True)
 
